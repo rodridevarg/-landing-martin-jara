@@ -750,11 +750,17 @@
       <div class="contact-left">
         <h2>¿Bailamos juntos?</h2>
         <p>Si querés clases, asesorías o simplemente charlar sobre danza, escribime. El movimiento empieza con una conexión.</p>
-        <form class="contact-form" onsubmit="event.preventDefault(); alert('¡Gracias por tu mensaje! Pronto me contacto.');">
-          <input type="text" placeholder="nombre" required>
-          <input type="tel" placeholder="whatsapp">
-          <input type="email" placeholder="email" required>
-          <textarea placeholder="mensaje" rows="4"></textarea>
+        <form class="contact-form" action="https://formsubmit.co/rodrigo.desarrollador@gmail.com" method="POST">
+          <input type="hidden" name="_subject" value="Nuevo mensaje desde la web de Martín Jara">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_next" value="https://martinjara.com.ar/gracias.html">
+          <input type="text" name="_honey" style="display:none">
+
+          <input type="text" name="nombre" placeholder="nombre" required>
+          <input type="tel" name="whatsapp" placeholder="whatsapp">
+          <input type="email" name="email" placeholder="email" required>
+          <textarea name="mensaje" placeholder="mensaje" rows="4" required></textarea>
+
           <button type="submit">Enviar</button>
         </form>
       </div>
