@@ -561,11 +561,66 @@
       letter-spacing: 1px;
     }
 
+    /* CUSTOM CURSOR */
+    @media (pointer: fine) {
+      body { cursor: none; }
+      .cursor {
+        position: fixed;
+        top: 0; left: 0;
+        width: 12px; height: 12px;
+        background: var(--salmón);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9999;
+        mix-blend-mode: difference;
+        transition: width 0.3s, height 0.3s, background 0.3s;
+        transform: translate(-50%, -50%);
+      }
+      .cursor.hover {
+        width: 48px; height: 48px;
+        background: var(--crema);
+      }
+    }
+
+    /* STATS SECTION */
+    .stats-section {
+      background: var(--crema);
+      padding: 5rem 5%;
+      border-top: 2px solid var(--marrón);
+      border-bottom: 2px solid var(--marrón);
+    }
+    .stats-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3rem;
+      text-align: center;
+    }
+    .stat-item h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 8vw, 5.5rem);
+      color: var(--verde);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    .stat-item p {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--marrón);
+      opacity: 0.7;
+    }
+
+    /* 3D TILT CARDS */
+    .books-grid { perspective: 1000px; }
+    .book-card { transform-style: preserve-3d; will-change: transform; }
+
     /* REVEAL ON SCROLL */
     .reveal {
       opacity: 0;
-      transform: translateY(50px);
-      transition: all 0.8s ease-out;
+      transform: translateY(80px);
+      transition: opacity 1s cubic-bezier(0.22, 1, 0.36, 1), transform 1s cubic-bezier(0.22, 1, 0.36, 1);
     }
     .reveal.visible {
       opacity: 1;
@@ -598,6 +653,7 @@
       .hover-menu-item:hover { margin: 0; padding-left: 0; padding-right: 0; }
 
       .books-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: 1fr; gap: 2rem; }
     }
   </style>
 </head>
@@ -632,6 +688,24 @@
       <div class="hero-sub">
         <p>Transformo la danza en una experiencia consciente. Clases, libros y herramientas creativas para coreógrafos y amantes del movimiento.</p>
         <a href="#recursos" class="btn">Ver recursos</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="stats-section">
+    <div class="stats-grid">
+      <div class="stat-item reveal">
+        <h3><span data-count="500">0</span>+</h3>
+        <p>Alumnos formados</p>
+      </div>
+      <div class="stat-item reveal">
+        <h3><span data-count="15">0</span>+</h3>
+        <p>Años de trayectoria</p>
+      </div>
+      <div class="stat-item reveal">
+        <h3><span data-count="2">0</span></h3>
+        <p>Libros publicados</p>
       </div>
     </div>
   </section>
@@ -798,14 +872,103 @@
   </footer>
 
   <script>
-    // Scroll reveal
-    const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add('visible');
+    // ---------- CUSTOM CURSOR ----------
+    const cursor = document.createElement('div');
+    cursor.classList.add('cursor');
+    document.body.appendChild(cursor);
+
+    let mouseX = 0, mouseY = 0, curX = 0, curY = 0;
+    document.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; });
+
+    function animateCursor() {
+      curX += (mouseX - curX) * 0.15;
+      curY += (mouseY - curY) * 0.15;
+      cursor.style.left = curX + 'px';
+      cursor.style.top = curY + 'px';
+      requestAnimationFrame(animateCursor);
+    }
+    if (window.matchMedia('(pointer: fine)').matches) animateCursor();
+
+    document.querySelectorAll('a, button, .hover-menu-item').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+    });
+
+    // ---------- MAGNETIC BUTTONS ----------
+    const magnets = document.querySelectorAll('.btn');
+    magnets.forEach(btn => {
+      btn.addEventListener('mousemove', e => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
       });
-    }, { threshold: 0.1 });
-    reveals.forEach(el => observer.observe(el));
+      btn.addEventListener('mouseleave', () => {
+        btn.style.transform = 'translate(0,0)';
+      });
+    });
+
+    // ---------- 3D TILT ON BOOK CARDS ----------
+    const tiltCards = document.querySelectorAll('.book-card');
+    tiltCards.forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = ((y - centerY) / centerY) * -8;
+        const rotateY = ((x - centerX) / centerX) * 8;
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px)`;
+        card.style.boxShadow = '0 30px 60px rgba(15,75,75,0.15)';
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
+        card.style.boxShadow = 'none';
+      });
+    });
+
+    // ---------- HERO PARALLAX ----------
+    const heroBg = document.querySelector('.hero-bg img');
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      if (heroBg && scrollY < window.innerHeight) {
+        heroBg.style.transform = `translateY(${scrollY * 0.25}px) scale(1.1)`;
+      }
+    });
+
+    // ---------- SCROLL REVEAL ----------
+    const reveals = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    reveals.forEach(el => revealObserver.observe(el));
+
+    // ---------- ANIMATED COUNTERS ----------
+    const counters = document.querySelectorAll('[data-count]');
+    const countObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const target = +entry.target.getAttribute('data-count');
+          const duration = 2000;
+          const start = performance.now();
+          const update = now => {
+            const progress = Math.min((now - start) / duration, 1);
+            const ease = 1 - Math.pow(1 - progress, 3);
+            entry.target.textContent = Math.floor(ease * target);
+            if (progress < 1) requestAnimationFrame(update);
+          };
+          requestAnimationFrame(update);
+          countObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+    counters.forEach(c => countObserver.observe(c));
   </script>
 </body>
 </html>
