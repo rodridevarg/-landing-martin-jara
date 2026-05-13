@@ -1,0 +1,14 @@
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Archivos personales y de recursos no necesarios para producción
+recursos/
+*.zip
+*.lnk
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
