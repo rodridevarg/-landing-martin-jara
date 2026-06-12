@@ -377,49 +377,30 @@
 
     .contact-left p { opacity: 0.8; margin-bottom: 2rem; max-width: 400px; }
 
-    .contact-form input,
-    .contact-form textarea {
-      width: 100%;
-      background: transparent;
+    .btn-whatsapp {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: #25D366;
+      color: white;
       border: none;
-      border-bottom: 1.5px solid rgba(253,253,243,0.25);
-      padding: 1rem 0;
-      color: var(--crema);
-      font-family: 'Inter', sans-serif;
-      font-size: 1rem;
-      margin-bottom: 1.5rem;
-      outline: none;
-      transition: border-color 0.3s;
-    }
-
-    .contact-form input::placeholder,
-    .contact-form textarea::placeholder {
-      color: rgba(253,253,243,0.5);
-      text-transform: lowercase;
-    }
-
-    .contact-form input:focus,
-    .contact-form textarea:focus {
-      border-color: var(--salmón);
-    }
-
-    .contact-form textarea { resize: vertical; min-height: 100px; }
-
-    .contact-form button {
-      background: var(--salmón);
-      color: var(--blanco);
-      border: none;
-      padding: 1rem 2.5rem;
+      padding: 1.2rem 2.5rem;
       font-family: 'Inter', sans-serif;
       font-weight: 600;
-      font-size: 0.85rem;
+      font-size: 0.95rem;
       text-transform: uppercase;
       letter-spacing: 2px;
       cursor: pointer;
-      transition: background 0.3s;
+      transition: all 0.3s;
+      text-decoration: none;
+      box-shadow: 0 8px 25px rgba(37, 211, 102, 0.3);
     }
 
-    .contact-form button:hover { background: var(--durazno); color: var(--marrón); }
+    .btn-whatsapp:hover {
+      background: #128C7E;
+      transform: translateY(-3px);
+      box-shadow: 0 12px 35px rgba(37, 211, 102, 0.4);
+    }
 
     .contact-right h4 {
       font-family: 'Inter', sans-serif;
@@ -856,20 +837,11 @@
     <div class="contact-inner">
       <div class="contact-left">
         <h2>¿Bailamos juntos?</h2>
-        <p>Si querés clases, asesorías o simplemente charlar sobre danza, escribime. El movimiento empieza con una conexión.</p>
-        <form class="contact-form" action="https://formsubmit.co/rodrigo.desarrollador@gmail.com" method="POST">
-          <input type="hidden" name="_subject" value="Nuevo mensaje desde la web de Martín Jara">
-          <input type="hidden" name="_template" value="table">
-          <input type="hidden" name="_next" value="https://martinjara.com.ar/gracias.html">
-          <input type="text" name="_honey" style="display:none">
-
-          <input type="text" name="nombre" placeholder="nombre" required>
-          <input type="tel" name="whatsapp" placeholder="whatsapp">
-          <input type="email" name="email" placeholder="email" required>
-          <textarea name="mensaje" placeholder="mensaje" rows="4" required></textarea>
-
-          <button type="submit">Enviar</button>
-        </form>
+        <p>Si querés clases, asesorías o simplemente charlar sobre danza, escribime por WhatsApp. El movimiento empieza con una conexión.</p>
+        <a href="https://wa.me/542235474802?text=Hola%20Martín!%20Te%20contacto%20desde%20tu%20web%20y%20quiero%20saber%20más%20sobre%20tus%20clases." class="btn-whatsapp" target="_blank" rel="noopener noreferrer">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          Escribir por WhatsApp
+        </a>
       </div>
       <div class="contact-right">
         <div class="info-item">
@@ -877,8 +849,8 @@
           <p>Argentina</p>
         </div>
         <div class="info-item">
-          <h4>Contacto</h4>
-          <p>contacto@profedanza.com</p>
+          <h4>WhatsApp</h4>
+          <p>223-5474802</p>
         </div>
         <div class="info-item">
           <h4>Social</h4>
