@@ -655,6 +655,140 @@
       .books-grid { grid-template-columns: 1fr; }
       .stats-grid { grid-template-columns: 1fr; gap: 2rem; }
     }
+
+    /* VIDEO SECTION */
+    .video-section {
+      padding: 4rem 5%;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .video-container {
+      position: relative;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .video-thumb {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      border: 2px solid var(--marrón);
+    }
+    .video-thumb img {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+    .video-thumb:hover img {
+      transform: scale(1.03);
+    }
+    .play-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(15, 75, 75, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s;
+    }
+    .video-thumb:hover .play-overlay {
+      background: rgba(15, 75, 75, 0.15);
+    }
+    .play-button {
+      width: 80px;
+      height: 80px;
+      background: var(--salmón);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--crema);
+      transition: transform 0.3s, background 0.3s;
+      box-shadow: 0 10px 30px rgba(230, 141, 111, 0.4);
+    }
+    .video-thumb:hover .play-button {
+      transform: scale(1.1);
+      background: var(--verde);
+    }
+    .video-caption {
+      text-align: center;
+      margin-top: 1.5rem;
+    }
+    .video-caption h3 {
+      font-size: 1.5rem;
+      color: var(--verde);
+      letter-spacing: 3px;
+      margin-bottom: 0.3rem;
+    }
+    .video-caption p {
+      font-size: 0.9rem;
+      opacity: 0.7;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    /* VIDEO MODAL */
+    .video-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.9);
+      z-index: 10000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .video-modal.active {
+      display: flex;
+      opacity: 1;
+    }
+    .modal-close {
+      position: absolute;
+      top: 2rem;
+      right: 2rem;
+      width: 48px;
+      height: 48px;
+      background: var(--crema);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--marrón);
+      transition: background 0.3s, transform 0.3s;
+      z-index: 10001;
+    }
+    .modal-close:hover {
+      background: var(--salmón);
+      color: var(--crema);
+      transform: rotate(90deg);
+    }
+    .video-wrapper {
+      width: 90%;
+      max-width: 1000px;
+      aspect-ratio: 16/9;
+      position: relative;
+    }
+    .video-wrapper iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    @media (max-width: 600px) {
+      .play-button {
+        width: 60px;
+        height: 60px;
+      }
+      .modal-close {
+        top: 1rem;
+        right: 1rem;
+        width: 40px;
+        height: 40px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -692,6 +826,34 @@
     </div>
   </section>
 
+  <!-- VIDEO SECTION -->
+  <section class="video-section">
+    <div class="video-container reveal">
+      <div class="video-thumb" id="videoThumb" onclick="openVideoModal()">
+        <img src="https://img.youtube.com/vi/napEwW6i7jw/maxresdefault.jpg" alt="Martín Jara bailando">
+        <div class="play-overlay">
+          <div class="play-button">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="video-caption">
+        <h3>MOVIMIENTO EN ACCIÓN</h3>
+        <p>Una mirada a la danza consciente de Martín Jara</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- VIDEO MODAL -->
+  <div class="video-modal" id="videoModal" onclick="closeVideoModal(event)">
+    <div class="modal-close" onclick="closeVideoModal(event)">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+    </div>
+    <div class="video-wrapper" onclick="event.stopPropagation()">
+      <div id="videoPlayer"></div>
+    </div>
+  </div>
+
   <!-- STATS -->
   <section class="stats-section">
     <div class="stats-grid">
@@ -713,13 +875,13 @@
   <!-- MARQUEE -->
   <div class="marquee">
     <div class="marquee-track">
-      <span>BALLET</span><span class="marquee-dot">•</span>
+      <span>RITMO</span><span class="marquee-dot">•</span>
       <span>EXPRESIÓN</span><span class="marquee-dot">•</span>
       <span>COREOGRAFÍA</span><span class="marquee-dot">•</span>
       <span>FLUIDEZ</span><span class="marquee-dot">•</span>
       <span>CONEXIÓN</span><span class="marquee-dot">•</span>
       <span>DINÁMICA</span><span class="marquee-dot">•</span>
-      <span>BALLET</span><span class="marquee-dot">•</span>
+      <span>RITMO</span><span class="marquee-dot">•</span>
       <span>EXPRESIÓN</span><span class="marquee-dot">•</span>
       <span>COREOGRAFÍA</span><span class="marquee-dot">•</span>
       <span>FLUIDEZ</span><span class="marquee-dot">•</span>
@@ -849,10 +1011,10 @@
         </div>
         <div class="info-item">
           <h4>Social</h4>
-          <p>@profedanza</p>
+          <p>@martinjara_danceteacher</p>
         </div>
         <div class="socials">
-          <a href="#" aria-label="Instagram">
+          <a href="https://www.instagram.com/martinjara_danceteacher/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
           </a>
           <a href="#" aria-label="YouTube">
@@ -969,6 +1131,32 @@
       });
     }, { threshold: 0.5 });
     counters.forEach(c => countObserver.observe(c));
+
+    // ---------- VIDEO MODAL ----------
+    const modal = document.getElementById('videoModal');
+    const videoPlayer = document.getElementById('videoPlayer');
+    let videoLoaded = false;
+
+    function openVideoModal() {
+      modal.classList.add('active');
+      if (!videoLoaded) {
+        videoPlayer.innerHTML = '<iframe src="https://www.youtube.com/embed/napEwW6i7jw?autoplay=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
+        videoLoaded = true;
+      }
+    }
+
+    function closeVideoModal(e) {
+      if (e) e.stopPropagation();
+      modal.classList.remove('active');
+      videoPlayer.innerHTML = '';
+      videoLoaded = false;
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('active')) {
+        closeVideoModal();
+      }
+    });
   </script>
 </body>
 </html>
