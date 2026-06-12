@@ -203,6 +203,20 @@
       color: var(--crema);
     }
 
+    .btn-video {
+      padding: 1rem 2.2rem;
+      font-size: 0.95rem;
+      gap: 0.75rem;
+    }
+
+    .btn-video svg {
+      transition: transform 0.3s;
+    }
+
+    .btn-video:hover svg {
+      transform: scale(1.2);
+    }
+
     /* MARQUEE */
     .marquee {
       background: var(--verde);
@@ -546,20 +560,21 @@
 
     /* VIDEO SECTION */
     .video-section {
-      padding: 4rem 5%;
+      padding: 6rem 4%;
       max-width: 1400px;
       margin: 0 auto;
     }
     .video-container {
       position: relative;
-      max-width: 900px;
+      max-width: 1200px;
       margin: 0 auto;
     }
     .video-thumb {
       position: relative;
       overflow: hidden;
       cursor: pointer;
-      border: 2px solid var(--marrón);
+      border: 3px solid var(--marrón);
+      box-shadow: 0 20px 60px rgba(15, 75, 75, 0.15);
     }
     .video-thumb img {
       width: 100%;
@@ -574,18 +589,18 @@
     .play-overlay {
       position: absolute;
       inset: 0;
-      background: rgba(15, 75, 75, 0.3);
+      background: rgba(15, 75, 75, 0.25);
       display: flex;
       align-items: center;
       justify-content: center;
       transition: background 0.3s;
     }
     .video-thumb:hover .play-overlay {
-      background: rgba(15, 75, 75, 0.15);
+      background: rgba(15, 75, 75, 0.1);
     }
     .play-button {
-      width: 80px;
-      height: 80px;
+      width: 100px;
+      height: 100px;
       background: var(--salmón);
       border-radius: 50%;
       display: flex;
@@ -593,24 +608,29 @@
       justify-content: center;
       color: var(--crema);
       transition: transform 0.3s, background 0.3s;
-      box-shadow: 0 10px 30px rgba(230, 141, 111, 0.4);
+      box-shadow: 0 10px 40px rgba(230, 141, 111, 0.5);
+    }
+    .play-button svg {
+      width: 36px;
+      height: 36px;
+      margin-left: 4px;
     }
     .video-thumb:hover .play-button {
-      transform: scale(1.1);
+      transform: scale(1.15);
       background: var(--verde);
     }
     .video-caption {
       text-align: center;
-      margin-top: 1.5rem;
+      margin-top: 2rem;
     }
     .video-caption h3 {
-      font-size: 1.5rem;
+      font-size: clamp(1.5rem, 3vw, 2rem);
       color: var(--verde);
       letter-spacing: 3px;
-      margin-bottom: 0.3rem;
+      margin-bottom: 0.5rem;
     }
     .video-caption p {
-      font-size: 0.9rem;
+      font-size: 1rem;
       opacity: 0.7;
       text-transform: uppercase;
       letter-spacing: 2px;
@@ -666,9 +686,16 @@
     }
 
     @media (max-width: 600px) {
+      .video-section {
+        padding: 3rem 3%;
+      }
       .play-button {
-        width: 60px;
-        height: 60px;
+        width: 70px;
+        height: 70px;
+      }
+      .play-button svg {
+        width: 28px;
+        height: 28px;
       }
       .modal-close {
         top: 1rem;
@@ -709,7 +736,10 @@
       <h1>HONRAR EL ARTE.</h1>
       <div class="hero-sub">
         <p>Transformo la danza en una experiencia consciente. Clases y herramientas creativas para coreógrafos y amantes del movimiento.</p>
-        <a href="#video" class="btn">Ver video</a>
+        <a href="#video" class="btn btn-video">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          Ver video
+        </a>
       </div>
     </div>
   </section>
